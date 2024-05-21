@@ -134,7 +134,7 @@
                   color="white"
                   style="background-color: #c62828"
                   class="pa-5 rounded mx-1"
-                  @click=""
+                  @click="removeMedicineFromList(item)"
                   >mdi-delete</v-icon
                 >
               </template>
@@ -324,6 +324,13 @@ function addMedicineInList() {
   });
   medicineSelection.medicine = null;
   medicineSelection.amount = 1;
+}
+// FIx
+function removeMedicineFromList(item) {
+  const itemIndex = tableData.data.findIndex(obj => obj.id === idAEliminar);
+  if (itemIndex!== -1) {
+    tableData.data.splice(itemIndex, 1);
+  }
 }
 
 defineExpose({ changeShowDialog });
