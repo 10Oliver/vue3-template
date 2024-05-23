@@ -5,7 +5,7 @@
     icon="mdi-medication"
   >
     <v-card-text>
-      <v-row class="mt-3">
+      <v-row class="mt-1">
         <v-col cols="10" md="6" class="py-1 py-md-0">
           <v-autocomplete
             :items="medicineItems"
@@ -61,13 +61,17 @@
         </v-col>
         <!-- End: Select medicine -->
         <!-- Begin: Medicine selected -->
-        <v-col cols="12">
-          <v-data-table :headers="tableHeaders" :items="formInfo.medicineList">
+        <v-col cols="12" class="pt-0">
+          <v-data-table
+            :headers="tableHeaders"
+            :items="formInfo.medicineList"
+            items-per-page="3"
+          >
             <template v-slot:item.totalAmount="{ index, item }">
               <div class="d-flex items-center">
                 <v-text-field
                   density="compact"
-                  class="my-1"
+                  class="my-0 py-0"
                   :hide-details="item.amount > 0"
                   append-inner-icon="mdi-plus"
                   prepend-inner-icon="mdi-minus"
@@ -93,13 +97,14 @@
             </template>
           </v-data-table>
           <p
-          class="text-red-darken-2"
+            class="text-red-darken-2"
             v-if="
               v$.medicineList.$errors.map((e) => e.$validator == 'notEmpty')
                 .length !== 0
             "
-            >Debes de agregar al menos una medicina para continuar</p
           >
+            Debes de agregar al menos una medicina para continuar
+          </p>
         </v-col>
       </v-row>
     </v-card-text>
@@ -112,7 +117,7 @@
         >Regresar</v-btn
       >
       <v-btn
-        color="cyan-darken-2"
+        color="blue-darken-2"
         class="mx-1"
         variant="flat"
         @click="completeSecondStep"
@@ -233,7 +238,6 @@ async function completeSecondStep() {
     emit("complete-second-step", formInfo.medicineList);
     return;
   }
-  alert(">:<\\");
 }
 function goBackFirstStep() {
   // Remove current data
@@ -265,10 +269,7 @@ async function addMedicineInList() {
         Number(formInfo.medicineList[checkAlreadyIndex].amount) +
         Number(formInfo.medicineSelection.amount);
     }
-    // Reset validations
-    v$.value.medicineSelection.$reset();
-    formInfo.medicineSelection.medicine = null;
-    formInfo.medicineSelection.amount = 1;
+    cleanData();
   }
 }
 // Custom message error
@@ -288,6 +289,13 @@ function removeMedicineFromList(item) {
     formInfo.medicineList.splice(itemIndex, 1);
   }
 }
+
+const cleanData = () => {
+  // Reset validations
+  v$.value.medicineSelection.$reset();
+  formInfo.medicineSelection.medicine = null;
+  formInfo.medicineSelection.amount = 1;
+};
 
 /**
  * Validations
@@ -315,4 +323,6 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, formInfo);
+
+defineExpose({ cleanData });
 </script>

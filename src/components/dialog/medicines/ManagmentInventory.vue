@@ -13,17 +13,21 @@
         </div>
         <v-icon @click="changeShowDialog">mdi-close</v-icon>
       </v-card-title>
-      <v-card-text class="px-16 pb-0">
+      <v-card-text class="px-16 py-0">
         <v-stepper v-model="step" hide-actions :items="stepperHeaders">
           <!-- Begin:: First step -->
           <template v-slot:item.1>
-            <FirstStep @complete-first-step="saveFirstStep" />
+            <FirstStep
+              ref="FirstStepRef"
+              @complete-first-step="saveFirstStep"
+            />
           </template>
           <!-- End:: First step -->
 
           <!-- Begin:: Second step -->
           <template v-slot:item.2>
             <SecondStep
+              ref="SecondStepRef"
               :mode="formInfo.mode"
               @complete-second-step="saveSecondStep"
               @go-back-first-step="goBackFirstStep"
@@ -58,6 +62,13 @@ import FirstStep from "./steps/FirstStep.vue";
 import SecondStep from "./steps/SecondStep.vue";
 import ThirdStep from "./steps/ThirdStep.vue";
 
+
+/**
+ * Refs
+ */
+
+const SecondStepRef = ref(null);
+const FirstStepRef = ref(null);
 /**
  * Data
  */
@@ -107,6 +118,8 @@ const completeThirdStep = () => {
   alert("Todo completado");
   step.value = 1;
   // Reset form info from steps
+  SecondStepRef.value.cleanData();
+  FirstStepRef.value.cleanData();
   showDialog.value = false;
 };
 

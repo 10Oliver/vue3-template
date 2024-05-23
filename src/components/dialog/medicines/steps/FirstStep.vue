@@ -50,7 +50,7 @@
       </v-row>
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
-      <v-btn color="cyan-darken-2" variant="flat" @click="completeFirstStep"
+      <v-btn color="blue-darken-2" variant="flat" @click="completeFirstStep"
         >Continuar</v-btn
       >
     </v-card-actions>
@@ -58,24 +58,24 @@
 </template>
 
 <script setup>
-import { required, minLength } from '@/utils/customValidator';
-import useVuelidate from '@vuelidate/core';
-import { reactive, ref, defineEmits } from 'vue';
+import { required, minLength } from "@/utils/customValidator";
+import useVuelidate from "@vuelidate/core";
+import { reactive, ref } from "vue";
 
 /**
  * Props and emits
  */
-const emit = defineEmits(['complete-first-step'])
+const emit = defineEmits(["complete-first-step"]);
 
 /**
  * Data
  */
- const mode = ref(true);
+const mode = ref(true);
 const usersForm = reactive({
-    patient: "",
-    doctor_id: null
-})
- const personalItems = [
+  patient: "",
+  doctor_id: null,
+});
+const personalItems = [
   {
     name: "Dr. Ana García",
     rol: {
@@ -190,19 +190,27 @@ async function completeFirstStep() {
   const isCorrect = await v$.value.$validate();
   if (isCorrect) {
     // Emits father's method
-    emit('complete-first-step', usersForm, mode);
+    emit("complete-first-step", usersForm, mode);
     return;
   }
-  alert("Is not valid")
+  alert("Is not valid");
+}
+
+const cleanData = () => {
+  usersForm.doctor_id = null;
+  usersForm.patient = "";
+  v$.value.$reset();
 }
 
 /**
  * Validations
  */
 const rules = {
-    patient: { required, minLength: minLength(3) },
-    doctor_id: { required }
-}
+  patient: { required, minLength: minLength(3) },
+  doctor_id: { required },
+};
 
 const v$ = useVuelidate(rules, usersForm);
+
+defineExpose({ cleanData });
 </script>
