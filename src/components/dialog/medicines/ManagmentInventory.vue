@@ -17,15 +17,31 @@
         <v-stepper v-model="step" hide-actions :items="stepperHeaders">
           <!-- Begin:: First step -->
           <template v-slot:item.1>
-            <FirstStep @complete-first-step="saveFirstStep"/>
+            <FirstStep @complete-first-step="saveFirstStep" />
           </template>
           <!-- End:: First step -->
 
           <!-- Begin:: Second step -->
           <template v-slot:item.2>
-            <SecondStep :mode="formInfo.mode" @complete-second-step="saveSecondStep" @go-back-first-step="goBackFirstStep"/>
+            <SecondStep
+              :mode="formInfo.mode"
+              @complete-second-step="saveSecondStep"
+              @go-back-first-step="goBackFirstStep"
+            />
           </template>
           <!-- End:: Second step -->
+
+          <!-- Begin:: Third step -->
+          <template v-slot:item.3>
+            <ThirdStep
+              :mode="formInfo.mode"
+              :medicine-list="formInfo.medicine"
+              :users-info="formInfo.users"
+              @go-back-second-step="gotBackSecondStep"
+              @complete-third-step="completeThirdStep"
+            />
+          </template>
+          <!-- End:: Third step -->
         </v-stepper>
       </v-card-text>
     </v-card>
@@ -40,6 +56,7 @@ import { reactive, ref } from "vue";
  */
 import FirstStep from "./steps/FirstStep.vue";
 import SecondStep from "./steps/SecondStep.vue";
+import ThirdStep from "./steps/ThirdStep.vue";
 
 /**
  * Data
@@ -52,7 +69,7 @@ const formInfo = reactive({
     patient: "",
     doctor_id: null,
   },
-  medicine: []
+  medicine: [],
 });
 
 const stepperHeaders = ["Entrega", "Medicina", "Confirmación"];
@@ -70,17 +87,28 @@ const saveFirstStep = (users, mode) => {
   formInfo.users = users;
   formInfo.mode = mode;
   step.value = 2;
-}
+};
 
 const saveSecondStep = (medicineList) => {
   formInfo.medicine = medicineList;
   step.value = 3;
-}
+};
 
 const goBackFirstStep = () => {
   formInfo.medicine = [];
   step.value = 1;
-}
+};
+
+const gotBackSecondStep = () => {
+  step.value = 2;
+};
+
+const completeThirdStep = () => {
+  alert("Todo completado");
+  step.value = 1;
+  // Reset form info from steps
+  showDialog.value = false;
+};
 
 defineExpose({ changeShowDialog });
 </script>
