@@ -92,6 +92,14 @@
               >
             </template>
           </v-data-table>
+          <p
+          class="text-red-darken-2"
+            v-if="
+              v$.medicineList.$errors.map((e) => e.$validator == 'notEmpty')
+                .length !== 0
+            "
+            >Debes de agregar al menos una medicina para continuar</p
+          >
         </v-col>
       </v-row>
     </v-card-text>
@@ -118,7 +126,7 @@
 import { minValue, required } from "@/utils/customValidator";
 import useVuelidate from "@vuelidate/core";
 import { helpers } from "@vuelidate/validators";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 /**
  * Props and emits
@@ -132,6 +140,7 @@ const emit = defineEmits(["complete-second-step", "go-back-first-step"]);
 /**
  * Data
  */
+const evalaluateOnLoad = ref(true);
 const tableHeaders = [
   { title: "Medicina", value: "name" },
   { title: "Dosis", value: "dose" },
@@ -217,6 +226,8 @@ const medicineItems = [
  * Methods
  */
 async function completeSecondStep() {
+  // Change default correct validation
+  evalaluateOnLoad.value = false;
   const isCorrect = await v$.value.medicineList.$validate();
   if (isCorrect) {
     emit("complete-second-step", formInfo.medicineList);
@@ -230,7 +241,7 @@ function goBackFirstStep() {
   formInfo.medicineSelection.amount = 1;
   formInfo.medicineSelection.medicine = null;
   // Reset validations
-  v$.value.$reset();;
+  v$.value.$reset();
   // Execute father's method
   emit("go-back-first-step");
 }
@@ -239,7 +250,9 @@ async function addMedicineInList() {
   const isCorrect = await v$.value.medicineSelection.$validate();
   if (isCorrect) {
     // Check if medicine is already in array
-    const checkAlreadyIndex = formInfo.medicineList.findIndex((item) => (item.uuid == formInfo.medicineSelection.medicine.uuid));
+    const checkAlreadyIndex = formInfo.medicineList.findIndex(
+      (item) => item.uuid == formInfo.medicineSelection.medicine.uuid
+    );
     // If is not already, include a new one
     if (checkAlreadyIndex === -1) {
       formInfo.medicineList.push({
@@ -249,7 +262,8 @@ async function addMedicineInList() {
     } else {
       // If is already, add amount in current item
       formInfo.medicineList[checkAlreadyIndex].amount =
-        Number(formInfo.medicineList[checkAlreadyIndex].amount) + Number(formInfo.medicineSelection.amount);
+        Number(formInfo.medicineList[checkAlreadyIndex].amount) +
+        Number(formInfo.medicineSelection.amount);
     }
     // Reset validations
     v$.value.medicineSelection.$reset();
@@ -287,6 +301,12 @@ const rules = {
         minValue: helpers.withMessage("El valor mínimo es de 1", minValue(1)),
       },
     }),
+    notEmpty: helpers.withMessage(
+      "Debes de agregar al menos una medicina para continuar",
+      (value) => {
+        return (value && value.length > 0) || evalaluateOnLoad.value;
+      }
+    ),
   },
   medicineSelection: {
     medicine: { required },
