@@ -9,6 +9,8 @@ const messages = {
       minLength: "The field must have at least {{count}} characters.",
       maxLength: "The field cannot exceed {{count}} characters.",
       email: "Please enter a valid email address.",
+      minValue: "The min value is {min}",
+      maxValue: "The max value is {max}",
     },
   },
   es: {
@@ -18,6 +20,8 @@ const messages = {
       minLength: "El campo debe tener al menos {min} caracteres.",
       maxLength: "El campo no puede exceder {max} caracteres.",
       email: "Dirección de correo inválida.",
+      minValue: "El valor mínimo es de {min}",
+      maxValue: "El valor máximo es de {max}",
     },
   },
 };
