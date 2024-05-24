@@ -193,7 +193,6 @@ async function completeFirstStep() {
     emit("complete-first-step", usersForm, mode);
     return;
   }
-  alert("Is not valid");
 }
 
 const cleanData = () => {

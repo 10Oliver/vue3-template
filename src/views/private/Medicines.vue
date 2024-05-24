@@ -2,29 +2,42 @@
   <div>
     <v-row class="py-10 px-5 px-md-16">
       <!-- Title -->
-      <v-col cols="12" >
+      <v-col cols="12">
         <h6 class="text-h6">Síntomas</h6>
       </v-col>
       <!-- Begin:: Inventory card and add medicine -->
       <v-col cols="12" sm="6" md="3">
-        <InformationItem title="Registrados" :subtitle="'23'" icon="mdi-bookmark-box-outline" color-theme="cyan"/>
+        <InformationItem
+          title="Registrados"
+          :subtitle="'23'"
+          icon="mdi-bookmark-box-outline"
+          color-theme="cyan"
+        />
       </v-col>
-<!--       <v-col cols="12" sm="6" md="3">
+      <!--       <v-col cols="12" sm="6" md="3">
         <InformationItem title="Registrar nuevos productos" :subtitle="'2'" icon="mdi-alert-box" color-theme="red"/>
       </v-col> -->
       <v-col cols="12" sm="6" md="3">
-        <InformationItem icon="mdi-plus" color-theme="deep-purple" @click="openAddMedicine">
-          <div  class="fill-height d-flex align-center">
+        <InformationItem
+          icon="mdi-plus"
+          color-theme="deep-purple"
+          @click="openAddMedicine"
+        >
+          <div class="fill-height d-flex align-center">
             <span>Registrar nueva medicina</span>
           </div>
-          </InformationItem>
+        </InformationItem>
       </v-col>
       <v-col cols="12" sm="6" md="3">
-        <InformationItem icon="mdi-pill-multiple" color-theme="deep-purple" @click="openManagmentInventory">
-          <div  class="fill-height d-flex align-center">
+        <InformationItem
+          icon="mdi-pill-multiple"
+          color-theme="deep-purple"
+          @click="openManagmentInventory"
+        >
+          <div class="fill-height d-flex align-center">
             <span>Registrar ingreso/retiro</span>
           </div>
-          </InformationItem>
+        </InformationItem>
       </v-col>
       <!-- End: Inventory card and add medicine -->
 
@@ -99,20 +112,81 @@ const ManagmentInventoryRef = ref(null);
 // Table data
 const tableInfo = reactive({
   data: [
-    { name: "Ibuprofeno", dose: "400 mg", status: "Activo" },
-    { name: "Paracetamol", dose: "500 mg", status: "Activo" },
-    { name: "Aspirina", dose: "325 mg", status: "Activo" },
-    { name: "Metformin", dose: "1000 mg", status: "Activo" },
-    { name: "Insulina", dose: "10 units", status: "Activo" },
-    { name: "Amlodipino", dose: "5 mg", status: "Activo" },
-    { name: "Atenolol", dose: "50 mg", status: "Activo" },
-    { name: "Lisinopril", dose: "20 mg", status: "Activo" },
-    { name: "Simvastatina", dose: "40 mg", status: "Activo" },
-    { name: "Omeprazol", dose: "20 mg", status: "Activo" },
+    {
+      name: "Ibuprofeno",
+      dose: "400 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      amount: 25,
+    },
+    {
+      name: "Paracetamol",
+      dose: "500 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174001",
+      amount: 30,
+    },
+    {
+      name: "Aspirina",
+      dose: "325 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174002",
+      amount: 35,
+    },
+    {
+      name: "Metformin",
+      dose: "1000 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174003",
+      amount: 40,
+    },
+    {
+      name: "Insulina",
+      dose: "10 units",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174004",
+      amount: 45,
+    },
+    {
+      name: "Amlodipino",
+      dose: "5 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174005",
+      amount: 50,
+    },
+    {
+      name: "Atenolol",
+      dose: "50 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174006",
+      amount: 55,
+    },
+    {
+      name: "Lisinopril",
+      dose: "20 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174007",
+      amount: 60,
+    },
+    {
+      name: "Simvastatina",
+      dose: "40 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174008",
+      amount: 65,
+    },
+    {
+      name: "Omeprazol",
+      dose: "20 mg",
+      status: "Activo",
+      id: "123e4567-e89b-12d3-a456-426614174009",
+      amount: 70,
+    },
   ],
   headers: [
     { title: "Nombre", value: "name" },
     { title: "Dosis", value: "dose" },
+    { title: "Cantidad", value: "amount" },
     { title: "Disponibilidad", value: "status" },
     { title: "Acciones", value: "details" },
   ],

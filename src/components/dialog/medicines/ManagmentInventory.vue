@@ -91,10 +91,7 @@ const stepperHeaders = ["Entrega", "Medicina", "Confirmación"];
 // Open modal
 const changeShowDialog = () => {
   showDialog.value = !showDialog.value;
-  step.value = 1;
-  // Reset form info from steps
-  SecondStepRef.value.cleanData();
-  FirstStepRef.value.cleanData();
+
 };
 
 // Save info from first step
@@ -119,7 +116,11 @@ const gotBackSecondStep = () => {
 };
 
 const completeThirdStep = () => {
-  changeShowDialog();
+  showDialog.value = !showDialog.value;
+  step.value = 1;
+  // Reset form info from steps
+  SecondStepRef.value.cleanData();
+  FirstStepRef.value.cleanData();
 };
 
 defineExpose({ changeShowDialog });
