@@ -5,7 +5,7 @@
   >
     <v-stepper hide-actions v-model="step" :items="stepperHeaders">
       <!-- Pasos del stepper -->
-      <template v-slot:item.1>
+      <template #:item.1>
         <v-card class="px-5 py-10">
           <v-card-title primary-title>
             Restablecimiento de contraseña
@@ -31,7 +31,7 @@
         </v-card>
       </template>
 
-      <template v-slot:item.2>
+      <template #:item.2>
         <v-card class="px-5 py-10">
           <v-card-title primary-title> Verificar cuenta </v-card-title>
           <v-container>
@@ -73,7 +73,7 @@
         </v-card>
       </template>
 
-      <template v-slot:item.3>
+      <template #:item.3>
         <v-card>
           <v-card-title> Restablecer contraseña </v-card-title>
           <v-container grid-list-xs>

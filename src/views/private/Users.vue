@@ -18,9 +18,9 @@
           items-per-page="5"
           :search="searchTableValue"
         >
-          <template v-slot:item.actions="{ item }">
+          <template #:item.actions="{ item }">
             <v-tooltip location="bottom" text="Editar usuario">
-              <template v-slot:activator="{ props }">
+              <template #:activator="{ props }">
                 <v-icon
                   v-bind="props"
                   color="white" style="background-color: #FFA000;" class="pa-5 rounded mx-1"
@@ -30,7 +30,7 @@
               </template>
             </v-tooltip>
             <v-tooltip location="bottom" text="Restablecer contraseña">
-              <template v-slot:activator="{ props }">
+              <template #:activator="{ props }">
                 <v-icon
                   v-bind="props"
                   color="white" style="background-color: #4CAF50;" class="pa-5 rounded mx-1"
@@ -40,7 +40,7 @@
               </template>
             </v-tooltip>
             <v-tooltip location="bottom" text="Eliminar usuario">
-              <template v-slot:activator="{ props }">
+              <template #:activator="{ props }">
                 <v-icon
                   v-bind="props"
                   color="white" style="background-color: #C62828;" class="pa-5 rounded mx-1"

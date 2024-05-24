@@ -15,7 +15,7 @@
               :title="medicine.name"
               :subtitle="medicine.dose"
             >
-              <template v-slot:prepend="{ item }">
+              <template #:prepend="{ item }">
                 <span class="pa-3 text-subtitle-1 font-weight-bold">{{
                   medicine.amount
                 }}</span>

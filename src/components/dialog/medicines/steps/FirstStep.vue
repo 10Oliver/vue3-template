@@ -33,7 +33,7 @@
             @blur="v$.doctor_id.$touch"
           >
             <!-- Item before selected -->
-            <template v-slot:item="{ props, item }">
+            <template #:item="{ props, item }">
               <v-list-item
                 v-bind="props"
                 prepend-icon="mdi-doctor"
@@ -42,7 +42,7 @@
               ></v-list-item>
             </template>
             <!-- Item selected -->
-            <template v-slot:chip="{ props, item }">
+            <template #:chip="{ props, item }">
               <v-chip prepend-icon="mdi-doctor">{{ item.value.name }}</v-chip>
             </template>
           </v-autocomplete>

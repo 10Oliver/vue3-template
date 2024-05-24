@@ -15,7 +15,7 @@
           :search="table.search"
           items-per-page="5"
         >
-        <template v-slot:item.actions="{ item }">
+        <template #:item.actions="{ item }">
           <v-icon color="white" style="background-color: #FFA000;" class="pa-5 rounded mx-1" @click="openUpdateSymptom(item)">mdi-pencil</v-icon>
           <v-icon color="white" style="background-color: #C62828;" class="pa-5 rounded mx-1" @click="openDeleteSymptom(item)">mdi-delete</v-icon>
         </template>

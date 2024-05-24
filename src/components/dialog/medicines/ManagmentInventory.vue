@@ -16,7 +16,7 @@
       <v-card-text class="px-16 py-0">
         <v-stepper v-model="step" hide-actions :items="stepperHeaders">
           <!-- Begin:: First step -->
-          <template v-slot:item.1>
+          <template #:item.1>
             <FirstStep
               ref="FirstStepRef"
               @complete-first-step="saveFirstStep"
@@ -25,7 +25,7 @@
           <!-- End:: First step -->
 
           <!-- Begin:: Second step -->
-          <template v-slot:item.2>
+          <template #:item.2>
             <SecondStep
               ref="SecondStepRef"
               :mode="formInfo.mode"
@@ -36,7 +36,7 @@
           <!-- End:: Second step -->
 
           <!-- Begin:: Third step -->
-          <template v-slot:item.3>
+          <template #:item.3>
             <ThirdStep
               :mode="formInfo.mode"
               :medicine-list="formInfo.medicine"

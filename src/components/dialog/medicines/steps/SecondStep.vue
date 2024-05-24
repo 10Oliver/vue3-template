@@ -19,14 +19,14 @@
             @input="v$.medicineSelection.medicine.$touch"
             @blur="v$.medicineSelection.medicine.$touch"
           >
-            <template v-slot:item="{ props, item }">
+            <template #:item="{ props, item }">
               <v-list-item
                 v-bind="props"
                 :title="item.value.name"
                 :subtitle="item.value.dose"
               ></v-list-item>
             </template>
-            <template v-slot:selection="{ props, item }">
+            <template #:selection="{ props, item }">
               <v-list-item v-bind="props" class="pl-0">
                 {{ item.value.name }}
               </v-list-item>
@@ -67,7 +67,7 @@
             :items="formInfo.medicineList"
             items-per-page="3"
           >
-            <template v-slot:item.totalAmount="{ index, item }">
+            <template #:item.totalAmount="{ index, item }">
               <div class="d-flex items-center">
                 <v-text-field
                   density="compact"
@@ -86,7 +86,7 @@
               </div>
             </template>
 
-            <template v-slot:item.actions="{ item }">
+            <template #:item.actions="{ item }">
               <v-icon
                 color="white"
                 style="background-color: #c62828"
@@ -131,7 +131,7 @@
 import { minValue, required } from "@/utils/customValidator";
 import useVuelidate from "@vuelidate/core";
 import { helpers } from "@vuelidate/validators";
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 
 /**
  * Props and emits
@@ -296,6 +296,17 @@ const cleanData = () => {
   formInfo.medicineSelection.medicine = null;
   formInfo.medicineSelection.amount = 1;
 };
+
+/**
+ * Watches
+ */
+watch(
+  formInfo.medicineList,
+  () => {
+    evalaluateOnLoad.value = false;
+  },
+  { once: true }
+);
 
 /**
  * Validations

@@ -52,7 +52,7 @@
           :loading="tableInfo.isLoading"
           items-per-page="5"
         >
-          <template v-slot:item.details="{ item }">
+          <template #:item.details="{ item }">
             <v-icon
               color="white"
               style="background-color: #ffa000"
