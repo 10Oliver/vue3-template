@@ -3,7 +3,7 @@
     <v-row class="py-10 px-5 px-md-16">
       <!-- Title -->
       <v-col cols="12">
-        <h6 class="text-h6">Síntomas</h6>
+        <h6 class="text-h6">Medicinas</h6>
       </v-col>
       <!-- Begin:: Inventory card and add medicine -->
       <v-col cols="12" sm="6" md="3">

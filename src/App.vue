@@ -1,9 +1,12 @@
 <template>
   <v-app>
-    <router-view/>
+    <router-view class="pa-0 ma-0"/>
   </v-app>
 </template>
 
-<script setup>
-  //
-</script>
+<style>
+html {
+  overflow-y: auto !important;
+}
+
+</style>

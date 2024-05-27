@@ -3,9 +3,11 @@
     <v-row class="py-10 px-5 px-md-16">
       <v-col cols="12" class="d-flex justify-space-between">
         <h6 class="text-h6">Síntomas</h6>
-        <v-btn color="cyan-darken-3" variant="flat" @click="openAddSymptom">Crear</v-btn>
+        <v-btn color="cyan-darken-3" variant="flat" @click="openAddSymptom"
+          >Crear</v-btn
+        >
       </v-col>
-      <v-col cols="12"</v-col>
+      <v-col cols="12"></v-col>
       <v-col cols="12">
         <v-data-table
           :headers="table.headers"
@@ -15,17 +17,40 @@
           :search="table.search"
           items-per-page="5"
         >
-        <template #item.actions="{ item }">
-          <v-icon color="white" style="background-color: #FFA000;" class="pa-5 rounded mx-1" @click="openUpdateSymptom(item)">mdi-pencil</v-icon>
-          <v-icon color="white" style="background-color: #C62828;" class="pa-5 rounded mx-1" @click="openDeleteSymptom(item)">mdi-delete</v-icon>
-        </template>
+          <template #item.actions="{ item }">
+            <v-icon
+              color="white"
+              style="background-color: #ffa000"
+              class="pa-5 rounded mx-1"
+              @click="openUpdateSymptom(item)"
+              >mdi-pencil</v-icon
+            >
+            <v-icon
+              color="white"
+              style="background-color: #c62828"
+              class="pa-5 rounded mx-1"
+              @click="openDeleteSymptom(item)"
+              >mdi-delete</v-icon
+            >
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
-    <ManagmentSymptom :initial-data="symptomSelected" ref="ManagmentSymptomRef"/>
-    <DeleteConfirmation title="Eliminar síntoma" icon="mdi-delete-circle-outline" :function="deleteSymptom" :delete-value="symptomSelected.id" ref="DeleteConfirmationRef">
+    <ManagmentSymptom
+      :initial-data="symptomSelected"
+      ref="ManagmentSymptomRef"
+    />
+    <DeleteConfirmation
+      title="Eliminar síntoma"
+      icon="mdi-delete-circle-outline"
+      :function="deleteSymptom"
+      :delete-value="symptomSelected.id"
+      ref="DeleteConfirmationRef"
+    >
       <p>
-        Estás a punto de eliminar <span class="font-weight-medium">{{ symptomSelected.name }}</span> de los registros.
+        Estás a punto de eliminar
+        <span class="font-weight-medium">{{ symptomSelected.name }}</span> de
+        los registros.
       </p>
       <p>Una vez eliminado, no podrás recuperarlo.</p>
     </DeleteConfirmation>
@@ -37,7 +62,6 @@ import { onMounted, reactive, ref } from "vue";
 import { useSidebarStore } from "@/store/sidebarStore";
 import ManagmentSymptom from "@/components/dialog/symptom/ManagmentSymptom.vue";
 import DeleteConfirmation from "@/components/dialog/general/DeleteConfirmation.vue";
-
 
 const sidebarStore = useSidebarStore();
 const ManagmentSymptomRef = ref(null);
@@ -152,7 +176,7 @@ const table = reactive({
     },
   ],
   isLoading: false,
-  search: ""
+  search: "",
 });
 
 /**
@@ -170,7 +194,7 @@ function openUpdateSymptom(symptom) {
 
 function openDeleteSymptom(symptom) {
   symptomSelected.value = symptom;
-  DeleteConfirmationRef.value.changeDialogStatus()
+  DeleteConfirmationRef.value.changeDialogStatus();
 }
 
 function deleteSymptom(sympetomId) {
