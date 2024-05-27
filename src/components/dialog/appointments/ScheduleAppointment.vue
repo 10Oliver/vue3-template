@@ -116,7 +116,7 @@
             <v-divider></v-divider>
             <v-col cols="12" md="6">
               <v-menu v-model="showCalendar" transition="scale-transition">
-                <template #:activator="{ props }">
+                <template #activator="{ props }">
                   <v-text-field
                     name="date"
                     label="Fecha de cita"
@@ -136,7 +136,7 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-menu v-model="showTimer" transition="scale-transition">
-                <template #:activator="{ props }">
+                <template #activator="{ props }">
                   <v-text-field
                     name="hour"
                     label="Hora de cita"

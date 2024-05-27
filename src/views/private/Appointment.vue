@@ -109,11 +109,11 @@
         :search="searchValue"
         v-model:expanded="expandedValue"
       >
-        <template #:item.appointment_state="{ item }">
+        <template #item.appointment_state="{ item }">
           <v-icon>mdi-timer-sand-complete</v-icon>
           {{ item.appointment_state.name }}
           </template>
-        <template #:expanded-row="{ columns, item }">
+        <template #expanded-row="{ columns, item }">
           <tr>
             <td :colspan="columns.length">
               <v-row class="pt-3 pb-5">
