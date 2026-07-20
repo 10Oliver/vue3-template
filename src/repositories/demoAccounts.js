@@ -1,12 +1,14 @@
+import { adminPermissions } from '@/config/permissions';
+
 export const demoAccounts = [
   {
     credentials: { email: 'admin@adminkit.local', password: 'Admin123*' },
-    user: { id: 'user-atlas-admin', name: 'Ana Martínez', email: 'admin@adminkit.local', role: 'Administradora', isPrimaryAdmin: true },
+    user: { id: 'user-atlas-admin', name: 'Ana Martínez', email: 'admin@adminkit.local', role: 'Administradora', isPrimaryAdmin: true, permissions: adminPermissions() },
     organizationId: 'org-atlas',
   },
   {
     credentials: { email: 'admin@norte.local', password: 'Admin123*' },
-    user: { id: 'user-norte-admin', name: 'Diego Herrera', email: 'admin@norte.local', role: 'Administrador', isPrimaryAdmin: true },
+    user: { id: 'user-norte-admin', name: 'Diego Herrera', email: 'admin@norte.local', role: 'Administrador', isPrimaryAdmin: true, permissions: adminPermissions() },
     organizationId: 'org-norte',
   },
 ];

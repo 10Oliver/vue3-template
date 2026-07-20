@@ -27,3 +27,7 @@ export function clearSession() {
 export function getActiveOrganizationId() {
   return readSession()?.organization?.id || null;
 }
+
+export function getActiveUser() {
+  return readSession()?.user || null;
+}

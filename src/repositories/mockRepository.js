@@ -1,4 +1,6 @@
 import { getActiveOrganizationId } from './sessionContext';
+import { getActiveUser } from './sessionContext';
+import { hasPermission } from '@/config/permissions';
 
 function getStorage() {
   return window.localStorage;
@@ -17,6 +19,7 @@ export function createMockRepository({
   validateUpdate,
   validateRemove,
   migrate,
+  permissionModule,
 }) {
   function normalize(items) {
     const normalizedItems = migrate ? migrate(clone(items)) : items;
@@ -51,6 +54,12 @@ export function createMockRepository({
     return organizationId;
   }
 
+  function authorize(requiredLevel) {
+    if (permissionModule && !hasPermission(getActiveUser(), permissionModule, requiredLevel)) {
+      throw new Error('No tienes permisos suficientes para esta operación.');
+    }
+  }
+
   function findAccessibleItem(id, organizationId) {
     const item = read().find((entry) => entry.id === id);
     if (!item) return null;
@@ -73,6 +82,7 @@ export function createMockRepository({
     },
 
     async list({ search = '', page = 1, itemsPerPage = 0 } = {}) {
+      authorize('Consulta');
       const organizationId = activeOrganizationId();
       const normalizedSearch = search.trim().toLowerCase();
       const filteredItems = read().filter((item) => {
@@ -87,11 +97,13 @@ export function createMockRepository({
     },
 
     async getById(id) {
+      authorize('Consulta');
       const item = findAccessibleItem(id, activeOrganizationId());
       return item ? clone(item) : null;
     },
 
     async create(payload) {
+      authorize('Edición');
       const organizationId = activeOrganizationId();
       const items = read();
       const scopedItems = scoped ? items.filter((entry) => entry.organizationId === organizationId) : items;
@@ -109,6 +121,7 @@ export function createMockRepository({
     },
 
     async update(id, payload) {
+      authorize('Edición');
       const organizationId = activeOrganizationId();
       const items = read();
       const index = items.findIndex((item) => item.id === id);
@@ -124,6 +137,7 @@ export function createMockRepository({
     },
 
     async remove(id) {
+      authorize('Administración');
       const organizationId = activeOrganizationId();
       const items = read();
       const current = items.find((item) => item.id === id);

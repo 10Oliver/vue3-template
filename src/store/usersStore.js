@@ -40,5 +40,11 @@ export const useUsersStore = defineStore('users', () => {
     items.value = items.value.filter((item) => item.id !== id);
   }
 
-  return { items, isLoading, error, initialized, load, create, update, remove };
+  async function transferPrimaryAdmin(fromId, toId) {
+    const newAdmin = await usersRepository.transferPrimaryAdmin(fromId, toId);
+    items.value = items.value.map((entry) => entry.id === fromId ? { ...entry, isPrimaryAdmin: false } : entry.id === toId ? newAdmin : entry);
+    return newAdmin;
+  }
+
+  return { items, isLoading, error, initialized, load, create, update, remove, transferPrimaryAdmin };
 });

@@ -20,7 +20,7 @@
     <v-divider />
     <v-list nav density="comfortable" class="pa-3">
       <v-list-item
-        v-for="item in navigationItems"
+        v-for="item in visibleNavigationItems"
         :key="item.to"
         :prepend-icon="item.icon"
         :title="item.title"
@@ -53,4 +53,5 @@ const initials = computed(() => authStore.user?.name
   .join('')
   .slice(0, 2)
   .toUpperCase() || 'UD');
+const visibleNavigationItems = computed(() => navigationItems.filter((item) => !item.permission || authStore.hasPermission(item.permission)));
 </script>

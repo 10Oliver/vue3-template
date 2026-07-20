@@ -6,6 +6,10 @@ export function createAuthGuard(authStore) {
       return { name: 'login', query: { redirect: to.fullPath } };
     }
 
+    if (to.meta.permission && !authStore.hasPermission(to.meta.permission, 'Consulta')) {
+      return { name: 'dashboard' };
+    }
+
     if (to.meta.guestOnly && authStore.isAuthenticated) {
       return { name: 'dashboard' };
     }

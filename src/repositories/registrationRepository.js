@@ -1,6 +1,7 @@
 import { isDemoEmail } from './demoAccounts';
 import { mockOrganizationsRepository } from './organizationsRepository';
 import { mockUsersRepository } from './usersRepository';
+import { adminPermissions } from '@/config/permissions';
 
 const SIGNUPS_KEY = 'adminkit.organization-signups';
 const ATTEMPTS_KEY = 'adminkit.organization-signup-attempts';
@@ -47,6 +48,7 @@ function buildAccount(signup) {
       email: signup.user.email,
       role: 'Administradora',
       isPrimaryAdmin: true,
+      permissions: adminPermissions(),
     },
     organizationId: signup.organization.id,
   };

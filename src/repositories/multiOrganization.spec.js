@@ -50,4 +50,17 @@ describe('aislamiento multi-organización en mocks', () => {
     await expect(mockUsersRepository.remove(admin.id)).rejects.toThrow('No se puede eliminar');
     await expect(mockUsersRepository.create({ name: 'Otra admin', email: 'otra@ejemplo.com', role: 'Administradora', status: 'Activo', isPrimaryAdmin: true })).rejects.toThrow('administración principal');
   });
+
+  it('transfiere la administración de forma atómica dentro de la organización', async () => {
+    await useAuthStore().login({ email: 'admin@adminkit.local', password: 'Admin123*' });
+    const users = await mockUsersRepository.list();
+    const currentAdmin = users.items.find((user) => user.isPrimaryAdmin);
+    const nextAdmin = users.items.find((user) => !user.isPrimaryAdmin);
+
+    await mockUsersRepository.transferPrimaryAdmin(currentAdmin.id, nextAdmin.id);
+    const updatedUsers = await mockUsersRepository.list();
+
+    expect(updatedUsers.items.filter((user) => user.isPrimaryAdmin)).toHaveLength(1);
+    expect(updatedUsers.items.find((user) => user.id === nextAdmin.id).isPrimaryAdmin).toBe(true);
+  });
 });

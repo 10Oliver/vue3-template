@@ -13,6 +13,7 @@
       </v-card-text>
       <v-data-table :headers="headers" :items="filteredUsers" :loading="usersStore.isLoading" items-per-page="5" hover>
         <template #item.role="{ item }"><v-chip size="small" color="primary" variant="tonal">{{ item.role }}</v-chip></template>
+        <template #item.name="{ item }"><div>{{ item.name }}</div><span v-if="item.isPrimaryAdmin" class="text-caption text-primary">Administrador principal</span></template>
         <template #item.status="{ item }"><v-chip size="small" :color="item.status === 'Activo' ? 'success' : 'secondary'" variant="tonal">{{ item.status }}</v-chip></template>
         <template #item.actions="{ item }">
           <v-btn icon="mdi-pencil-outline" size="small" variant="text" aria-label="Editar usuario" @click="openEdit(item)" />
@@ -33,6 +34,7 @@
               <v-col cols="12" sm="6"><v-select v-model="form.role" :items="roles" label="Rol" variant="outlined" :error-messages="formErrors.role" /></v-col>
               <v-col cols="12" sm="6"><v-select v-model="form.status" :items="statuses" label="Estado" variant="outlined" :error-messages="formErrors.status" /></v-col>
             </v-row>
+            <v-select v-for="module in permissionModules" :key="module.key" v-model="form.permissions[module.key]" :items="permissionLevels" :label="`Permiso: ${module.label}`" variant="outlined" />
             <div class="d-flex justify-end ga-2"><v-btn variant="text" @click="showForm = false">Cancelar</v-btn><v-btn color="primary" variant="flat" type="submit" :loading="isSaving">Guardar</v-btn></div>
           </v-form>
         </v-card-text>
@@ -50,6 +52,7 @@ import EmptyState from '@/components/ui/EmptyState.vue';
 import PageHeader from '@/components/ui/PageHeader.vue';
 import { useActivityStore } from '@/store/activityStore';
 import { useUsersStore } from '@/store/usersStore';
+import { defaultPermissions, permissionLevels, permissionModules } from '@/config/permissions';
 
 const usersStore = useUsersStore();
 const activityStore = useActivityStore();
@@ -63,7 +66,7 @@ const editingUser = ref(null);
 const selectedUser = ref(null);
 const roles = ['Administradora', 'Editor', 'Consulta'];
 const statuses = ['Activo', 'Invitado', 'Inactivo'];
-const form = reactive({ name: '', email: '', role: '', status: 'Activo' });
+const form = reactive({ name: '', email: '', role: '', status: 'Activo', permissions: defaultPermissions() });
 const formErrors = reactive({ name: '', email: '', role: '', status: '' });
 const headers = [{ title: 'Usuario', value: 'name' }, { title: 'Correo electrónico', value: 'email' }, { title: 'Rol', value: 'role' }, { title: 'Estado', value: 'status' }, { title: 'Acciones', value: 'actions', sortable: false, align: 'end' }];
 
@@ -71,7 +74,7 @@ const filteredUsers = computed(() => usersStore.items.filter((user) => (!roleFil
 
 function resetForm(user = null) {
   editingUser.value = user;
-  Object.assign(form, user ? { name: user.name, email: user.email, role: user.role, status: user.status } : { name: '', email: '', role: '', status: 'Activo' });
+  Object.assign(form, user ? { name: user.name, email: user.email, role: user.role, status: user.status, permissions: { ...defaultPermissions(), ...user.permissions } } : { name: '', email: '', role: '', status: 'Activo', permissions: defaultPermissions() });
   Object.assign(formErrors, { name: '', email: '', role: '', status: '' });
 }
 

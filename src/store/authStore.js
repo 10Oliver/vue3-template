@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { authRepository } from '@/repositories/authRepository';
+import { hasPermission } from '@/config/permissions';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
@@ -44,5 +45,9 @@ export const useAuthStore = defineStore('auth', () => {
     initialized.value = true;
   }
 
-  return { user, organization, initialized, isLoading, error, isAuthenticated, initialize, login, logout };
+  function canAccess(module, level = 'Consulta') {
+    return hasPermission(user.value, module, level);
+  }
+
+  return { user, organization, initialized, isLoading, error, isAuthenticated, hasPermission: canAccess, initialize, login, logout };
 });

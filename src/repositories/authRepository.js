@@ -2,6 +2,7 @@ import { clearSession, readSession, saveSession } from './sessionContext';
 import { mockOrganizationsRepository } from './organizationsRepository';
 import { demoAccounts, demoCredentials } from './demoAccounts';
 import { registrationRepository } from './registrationRepository';
+import { adminPermissions } from '@/config/permissions';
 
 function sanitizeUser(user) {
   return {
@@ -10,6 +11,7 @@ function sanitizeUser(user) {
     email: user.email,
     role: user.role,
     isPrimaryAdmin: Boolean(user.isPrimaryAdmin),
+    permissions: user.isPrimaryAdmin ? adminPermissions() : user.permissions || {},
   };
 }
 

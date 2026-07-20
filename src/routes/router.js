@@ -19,9 +19,9 @@ const routes = [
     component: () => import('@/layout/AdminLayout.vue'),
     children: [
       { path: 'dashboard', name: 'dashboard', component: () => import('@/views/private/Dashboard.vue'), meta: { requiresAuth: true } },
-      { path: 'users', name: 'users', component: () => import('@/views/private/Users.vue'), meta: { requiresAuth: true } },
-      { path: 'records', name: 'records', component: () => import('@/views/private/Records.vue'), meta: { requiresAuth: true } },
-      { path: 'activity', name: 'activity', component: () => import('@/views/private/Activity.vue'), meta: { requiresAuth: true } },
+      { path: 'users', name: 'users', component: () => import('@/views/private/Users.vue'), meta: { requiresAuth: true, permission: 'users' } },
+      { path: 'records', name: 'records', component: () => import('@/views/private/Records.vue'), meta: { requiresAuth: true, permission: 'records' } },
+      { path: 'activity', name: 'activity', component: () => import('@/views/private/Activity.vue'), meta: { requiresAuth: true, permission: 'activity' } },
       { path: 'settings', name: 'settings', component: () => import('@/views/private/Settings.vue'), meta: { requiresAuth: true } },
     ],
   },
