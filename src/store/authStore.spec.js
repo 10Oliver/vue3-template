@@ -24,12 +24,14 @@ describe('authStore', () => {
 
     expect(store.isAuthenticated).toBe(true);
     expect(store.user.email).toBe('admin@adminkit.local');
+    expect(store.organization).toEqual({ id: 'org-atlas', name: 'Grupo Atlas' });
     expect(window.localStorage.getItem('adminkit.session')).not.toContain('Admin123*');
 
     setActivePinia(createPinia());
     const restoredStore = useAuthStore();
     restoredStore.initialize();
-    expect(restoredStore.user.name).toBe('Administrador demo');
+    expect(restoredStore.user.name).toBe('Ana Martínez');
+    expect(restoredStore.organization.id).toBe('org-atlas');
   });
 
   it('rechaza credenciales inválidas', async () => {

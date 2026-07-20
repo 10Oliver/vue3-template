@@ -44,8 +44,8 @@ Sigue estos pasos para instalar y ejecutar el proyecto localmente:
 
 4. **Iniciar sesión:**
 
-   - Correo: `admin@adminkit.local`
-   - Contraseña: `Admin123*`
+   - Grupo Atlas: `admin@adminkit.local` / `Admin123*`
+   - Operaciones Norte: `admin@norte.local` / `Admin123*`
 
 5. **Compilar para producción:**
    Genera los archivos optimizados listos para desplegar:
@@ -79,28 +79,29 @@ npm run build
 
 El proyecto usa las versiones actuales compatibles de Vue 3.5, Pinia 4, Vue Router 5, Vuetify 3.12, Vite 8, Vitest 4 y ESLint 10. `vue-i18n` permanece en 9.14.5: es el último parche seguro de la rama compatible con Vuetify 3. La migración a `vue-i18n` 11 y Vuetify 4 debe hacerse conjuntamente como una actualización visual mayor.
 
-## 🔐 Sesión demo
+## 🔐 Sesión demo y organizaciones
 
-La plantilla incluye una sesión local para navegar y probar la interfaz sin backend.
+La plantilla incluye dos sesiones locales para navegar y probar el aislamiento entre organizaciones sin backend.
 
-- Correo: `admin@adminkit.local`
-- Contraseña: `Admin123*`
+- Grupo Atlas: `admin@adminkit.local` / `Admin123*`
+- Operaciones Norte: `admin@norte.local` / `Admin123*`
 
-La sesión se guarda únicamente en `localStorage`, sin almacenar la contraseña. Las rutas administrativas requieren sesión y el cierre de sesión elimina esos datos locales. La recuperación de contraseña es solo una pantalla de demostración: no envía correos ni modifica credenciales.
+La sesión guarda el usuario y su organización activa únicamente en `localStorage`, sin almacenar la contraseña. Usuarios, registros y actividad se aíslan por `organizationId`: un identificador de otra organización se rechaza incluso si se conoce la URL o el ID. Cada organización demo tiene exactamente un administrador principal. Las rutas administrativas requieren sesión y el cierre de sesión elimina ese contexto local. La recuperación de contraseña es solo una pantalla de demostración: no envía correos ni modifica credenciales.
 
 ## 🗂️ Datos demo y API
 
-Usuarios, registros y actividad tienen repositorios con los métodos `list`, `getById`, `create`, `update` y `remove`. El modo predeterminado es `mock`: los datos se guardan en `localStorage` con prefijos `adminkit.*`, sobreviven una recarga y pueden reiniciarse desde las herramientas del navegador.
+Usuarios, registros y actividad tienen repositorios con los métodos `list`, `getById`, `create`, `update` y `remove`. El modo predeterminado es `mock`: los datos se guardan en `localStorage` con prefijos `adminkit.*`, sobreviven una recarga y pueden reiniciarse desde las herramientas del navegador. Los datos previos sin organización se migran de forma local a Grupo Atlas.
 
 Para preparar una API, copia `.env.example` a `.env.local` y configura `VITE_DATA_SOURCE=api` junto con `VITE_API_BASE_URL`. Las vistas y stores no cambian al alternar de fuente. Consulta [API_CONTRACT.md](API_CONTRACT.md) para endpoints, modelos, paginación, errores y la advertencia de seguridad sobre variables `VITE_*`.
 
 ## ✅ Comprobación manual
 
 1. Intenta abrir `/dashboard` sin sesión: debe redirigir a `/login`.
-2. Inicia sesión y confirma que el panel, Usuarios, Registros, Actividad y Ajustes están disponibles.
+2. Inicia sesión con una organización y confirma que el panel, Usuarios, Registros, Actividad y Ajustes muestran únicamente su información.
 3. Crea, edita y elimina un usuario o registro; recarga la página para confirmar la persistencia local.
 4. Revisa Actividad: cada cambio debe aparecer como un nuevo evento.
-5. Cierra sesión y confirma que una ruta privada vuelve a redirigir al login.
+5. Cierra sesión, entra con la otra organización y confirma que no aparecen los datos creados en la primera.
+6. Cierra sesión y confirma que una ruta privada vuelve a redirigir al login.
 
 ## 📂 Estructura de Directorios
 

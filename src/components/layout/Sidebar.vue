@@ -10,7 +10,7 @@
       <v-list-item
         class="px-2"
         :title="authStore.user?.name || 'Usuario demo'"
-        :subtitle="authStore.user?.role || 'Administrador'"
+        :subtitle="authStore.organization?.name || authStore.user?.role || 'Organización demo'"
       >
         <template #prepend>
           <v-avatar color="primary" size="36"><span class="text-white font-weight-bold">{{ initials }}</span></v-avatar>

@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import { useUsersStore } from './usersStore';
+import { useAuthStore } from './authStore';
 
 function createStorage() {
   const data = new Map();
@@ -19,6 +20,7 @@ describe('usersStore', () => {
   });
 
   it('crea, actualiza y elimina usuarios persistidos localmente', async () => {
+    await useAuthStore().login({ email: 'admin@adminkit.local', password: 'Admin123*' });
     const store = useUsersStore();
     await store.load();
     expect(store.items).toHaveLength(3);

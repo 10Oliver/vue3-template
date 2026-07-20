@@ -4,14 +4,17 @@ import { authRepository } from '@/repositories/authRepository';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
+  const organization = ref(null);
   const initialized = ref(false);
   const isLoading = ref(false);
   const error = ref('');
-  const isAuthenticated = computed(() => Boolean(user.value));
+  const isAuthenticated = computed(() => Boolean(user.value && organization.value));
 
   function initialize() {
     if (initialized.value) return;
-    user.value = authRepository.restoreSession();
+    const session = authRepository.restoreSession();
+    user.value = session?.user || null;
+    organization.value = session?.organization || null;
     initialized.value = true;
   }
 
@@ -20,7 +23,9 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = '';
 
     try {
-      user.value = await authRepository.login(credentials);
+      const session = await authRepository.login(credentials);
+      user.value = session.user;
+      organization.value = session.organization;
       initialized.value = true;
       return user.value;
     } catch (loginError) {
@@ -34,9 +39,10 @@ export const useAuthStore = defineStore('auth', () => {
   function logout() {
     authRepository.logout();
     user.value = null;
+    organization.value = null;
     error.value = '';
     initialized.value = true;
   }
 
-  return { user, initialized, isLoading, error, isAuthenticated, initialize, login, logout };
+  return { user, organization, initialized, isLoading, error, isAuthenticated, initialize, login, logout };
 });

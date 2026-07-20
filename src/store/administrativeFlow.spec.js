@@ -3,6 +3,7 @@ import { createPinia, setActivePinia } from 'pinia';
 import { useActivityStore } from './activityStore';
 import { useRecordsStore } from './recordsStore';
 import { useUsersStore } from './usersStore';
+import { useAuthStore } from './authStore';
 
 function createStorage() {
   const data = new Map();
@@ -17,6 +18,7 @@ describe('flujo administrativo mock', () => {
   });
 
   it('crea registros y deja trazabilidad de los cambios', async () => {
+    await useAuthStore().login({ email: 'admin@adminkit.local', password: 'Admin123*' });
     const usersStore = useUsersStore();
     const recordsStore = useRecordsStore();
     const activityStore = useActivityStore();
