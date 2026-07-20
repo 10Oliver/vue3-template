@@ -46,14 +46,19 @@ import { moduleRepository } from '@/repositories/moduleRepository';
 import { useAuthStore } from '@/store/authStore';
 
 const authStore = useAuthStore();
-const modules = reactive({});
+const modules = reactive(Object.fromEntries(moduleCatalog.map((module) => [module.key, false])));
 const error = ref('');
 const isPrimaryAdmin = computed(() => authStore.user?.isPrimaryAdmin);
 const isAvailable = (key) => activeModuleKeys.includes(key);
 
 async function loadModules() {
   if (!authStore.organization) return;
-  Object.assign(modules, await moduleRepository.list(authStore.organization.id));
+  error.value = '';
+  try {
+    Object.assign(modules, await moduleRepository.list(authStore.organization.id));
+  } catch (moduleError) {
+    error.value = moduleError.message || 'No fue posible cargar la configuración de módulos.';
+  }
 }
 
 async function toggleModule(key, enabled) {
