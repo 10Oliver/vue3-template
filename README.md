@@ -13,7 +13,7 @@ Plantilla base para aplicaciones administrativas con interfaz responsive, sesió
 
 ## 📦 Requisitos Previos
 
-Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o superior recomendada).
+Asegúrate de tener instalado [Node.js](https://nodejs.org/) **22.12 o superior**. El stack de Vite 8 requiere Node 20.19+ o 22.12+.
 
 ## 🛠️ Instalación y primera ejecución
 
@@ -74,6 +74,10 @@ npm run build
 - `lint` valida JavaScript y la estructura base de componentes Vue.
 - `test:run` ejecuta las pruebas unitarias una sola vez.
 - `build` genera la compilación de producción.
+
+## 📦 Política de dependencias
+
+El proyecto usa las versiones actuales compatibles de Vue 3.5, Pinia 4, Vue Router 5, Vuetify 3.12, Vite 8, Vitest 4 y ESLint 10. `vue-i18n` permanece en 9.14.5: es el último parche seguro de la rama compatible con Vuetify 3. La migración a `vue-i18n` 11 y Vuetify 4 debe hacerse conjuntamente como una actualización visual mayor.
 
 ## 🔐 Sesión demo
 
