@@ -23,9 +23,48 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <v-card variant="flat" border rounded="lg" class="mt-6">
+      <v-card-item title="Módulos de la organización" subtitle="Activa las áreas que necesita tu operación. Desactivar una conserva los datos y bloquea su acceso." />
+      <v-alert v-if="error" type="error" variant="tonal" class="mx-4 mb-2">{{ error }}</v-alert>
+      <v-list>
+        <v-list-item v-for="module in moduleCatalog" :key="module.key" :title="module.label" :subtitle="module.description">
+          <template #append>
+            <v-switch :model-value="modules[module.key]" color="primary" hide-details :disabled="!isPrimaryAdmin || !isAvailable(module.key)" @update:model-value="toggleModule(module.key, $event)" />
+          </template>
+        </v-list-item>
+      </v-list>
+    </v-card>
   </section>
 </template>
 
 <script setup>
+import { computed, onMounted, reactive, ref } from 'vue';
 import PageHeader from '@/components/ui/PageHeader.vue';
+import { activeModuleKeys, moduleCatalog } from '@/config/modules';
+import { moduleRepository } from '@/repositories/moduleRepository';
+import { useAuthStore } from '@/store/authStore';
+
+const authStore = useAuthStore();
+const modules = reactive({});
+const error = ref('');
+const isPrimaryAdmin = computed(() => authStore.user?.isPrimaryAdmin);
+const isAvailable = (key) => activeModuleKeys.includes(key);
+
+async function loadModules() {
+  if (!authStore.organization) return;
+  Object.assign(modules, await moduleRepository.list(authStore.organization.id));
+}
+
+async function toggleModule(key, enabled) {
+  if (!isPrimaryAdmin.value || !isAvailable(key)) return;
+  error.value = '';
+  try {
+    Object.assign(modules, await moduleRepository.update(authStore.organization.id, key, enabled));
+  } catch (moduleError) {
+    error.value = moduleError.message || 'No fue posible actualizar el módulo.';
+  }
+}
+
+onMounted(loadModules);
 </script>

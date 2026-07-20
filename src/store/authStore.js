@@ -2,6 +2,7 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { authRepository } from '@/repositories/authRepository';
 import { hasPermission } from '@/config/permissions';
+import { isModuleEnabled } from '@/repositories/moduleRepository';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
@@ -49,5 +50,9 @@ export const useAuthStore = defineStore('auth', () => {
     return hasPermission(user.value, module, level);
   }
 
-  return { user, organization, initialized, isLoading, error, isAuthenticated, hasPermission: canAccess, initialize, login, logout };
+  function moduleEnabled(module) {
+    return Boolean(organization.value && isModuleEnabled(organization.value.id, module));
+  }
+
+  return { user, organization, initialized, isLoading, error, isAuthenticated, hasPermission: canAccess, isModuleEnabled: moduleEnabled, initialize, login, logout };
 });

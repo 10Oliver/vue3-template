@@ -1,6 +1,7 @@
 import { getActiveOrganizationId } from './sessionContext';
 import { getActiveUser } from './sessionContext';
 import { hasPermission } from '@/config/permissions';
+import { isModuleEnabled } from './moduleRepository';
 
 function getStorage() {
   return window.localStorage;
@@ -20,6 +21,7 @@ export function createMockRepository({
   validateRemove,
   migrate,
   permissionModule,
+  featureModule,
 }) {
   function normalize(items) {
     const normalizedItems = migrate ? migrate(clone(items)) : items;
@@ -55,6 +57,10 @@ export function createMockRepository({
   }
 
   function authorize(requiredLevel) {
+    const organizationId = activeOrganizationId();
+    if (featureModule && !isModuleEnabled(organizationId, featureModule)) {
+      throw new Error('Este módulo está desactivado para la organización.');
+    }
     if (permissionModule && !hasPermission(getActiveUser(), permissionModule, requiredLevel)) {
       throw new Error('No tienes permisos suficientes para esta operación.');
     }

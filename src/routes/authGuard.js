@@ -10,6 +10,10 @@ export function createAuthGuard(authStore) {
       return { name: 'dashboard' };
     }
 
+    if (to.meta.module && !authStore.isModuleEnabled(to.meta.module)) {
+      return { name: 'dashboard' };
+    }
+
     if (to.meta.guestOnly && authStore.isAuthenticated) {
       return { name: 'dashboard' };
     }

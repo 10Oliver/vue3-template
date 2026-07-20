@@ -5,6 +5,7 @@ import { createApiRepository } from './api/createApiRepository';
 export const mockRecordsRepository = createMockRepository({
   storageKey: 'adminkit.records',
   permissionModule: 'records',
+  featureModule: 'records',
   seed: [
     { id: 'record-atlas-ops', organizationId: 'org-atlas', name: 'Proceso de incorporación', category: 'Operaciones', status: 'Activo', updatedAt: '2026-07-19T12:00:00.000Z' },
     { id: 'record-atlas-sales', organizationId: 'org-atlas', name: 'Propuesta comercial', category: 'Comercial', status: 'Borrador', updatedAt: '2026-07-18T12:00:00.000Z' },

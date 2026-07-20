@@ -53,5 +53,5 @@ const initials = computed(() => authStore.user?.name
   .join('')
   .slice(0, 2)
   .toUpperCase() || 'UD');
-const visibleNavigationItems = computed(() => navigationItems.filter((item) => !item.permission || authStore.hasPermission(item.permission)));
+const visibleNavigationItems = computed(() => navigationItems.filter((item) => (!item.permission || authStore.hasPermission(item.permission)) && (!item.module || authStore.isModuleEnabled(item.module))));
 </script>

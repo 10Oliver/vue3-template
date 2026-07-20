@@ -3,6 +3,7 @@ import { createPinia, setActivePinia } from 'pinia';
 import { mockRecordsRepository } from './recordsRepository';
 import { mockUsersRepository } from './usersRepository';
 import { useAuthStore } from '@/store/authStore';
+import { moduleRepository } from './moduleRepository';
 
 function createStorage() {
   const data = new Map();
@@ -62,5 +63,16 @@ describe('aislamiento multi-organización en mocks', () => {
 
     expect(updatedUsers.items.filter((user) => user.isPrimaryAdmin)).toHaveLength(1);
     expect(updatedUsers.items.find((user) => user.id === nextAdmin.id).isPrimaryAdmin).toBe(true);
+  });
+
+  it('bloquea operaciones cuando un módulo está desactivado y conserva sus datos', async () => {
+    await useAuthStore().login({ email: 'admin@adminkit.local', password: 'Admin123*' });
+    await moduleRepository.update('org-atlas', 'records', false);
+
+    await expect(mockRecordsRepository.list()).rejects.toThrow('módulo está desactivado');
+
+    await moduleRepository.update('org-atlas', 'records', true);
+    const records = await mockRecordsRepository.list();
+    expect(records.items).toHaveLength(3);
   });
 });

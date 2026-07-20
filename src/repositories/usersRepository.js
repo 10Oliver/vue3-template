@@ -32,6 +32,7 @@ export const mockUsersRepository = createMockRepository({
     { id: 'user-norte-raul', organizationId: 'org-norte', name: 'Raúl Vega', email: 'raul@norte.local', role: 'Consulta', status: 'Activo', isPrimaryAdmin: false },
   ],
   permissionModule: 'users',
+  featureModule: 'users',
   validateCreate({ items, payload }) {
     if (payload.isPrimaryAdmin) throw new Error('La administración principal solo puede transferirse en una operación dedicada.');
     if (items.filter((user) => user.isPrimaryAdmin).length !== 1) throw new Error('La organización debe tener exactamente un administrador principal.');
