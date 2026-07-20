@@ -1,28 +1,23 @@
-<!-- Toolbar.vue -->
 <template>
-  <v-app-bar color="primary">
-
-    <v-app-bar-nav-icon @click="store.showSidebar = !store.showSidebar" v-if="$vuetify.display.smAndDown"></v-app-bar-nav-icon>
-    <!-- Contenido del AppBar -->
-    <v-toolbar-title>Sistema clinico</v-toolbar-title>
-    <!-- Botones u otros elementos aquí -->
-    <v-btn color="white" icon="mdi-cog" rounded="xl" class="mx-1 setting" to="/settings" />
-    <v-btn color="white" icon="mdi-power" rounded="xl" class="mx-1 logout" to="/login" />
+  <v-app-bar elevation="0" border>
+    <v-app-bar-nav-icon
+      v-if="$vuetify.display.smAndDown"
+      aria-label="Abrir navegación"
+      @click="sidebarStore.openSidebar"
+    />
+    <v-avatar color="primary" rounded="lg" size="32" class="ml-2 mr-3">
+      <span class="text-subtitle-2 font-weight-bold text-white">A</span>
+    </v-avatar>
+    <v-toolbar-title class="font-weight-bold">{{ appConfig.name }}</v-toolbar-title>
+    <v-spacer />
+    <v-btn icon="mdi-cog-outline" aria-label="Ajustes" to="/settings" />
+    <v-btn icon="mdi-logout" aria-label="Cerrar sesión" to="/login" />
   </v-app-bar>
 </template>
 
 <script setup>
+import { appConfig } from '@/config/app';
 import { useSidebarStore } from '@/store/sidebarStore';
 
-const store = useSidebarStore();
+const sidebarStore = useSidebarStore();
 </script>
-
-<style scoped>
-.setting:hover {
-  background-color: #2196F3;
-}
-
-.logout:hover {
-  background-color: #D50000;
-}
-</style>

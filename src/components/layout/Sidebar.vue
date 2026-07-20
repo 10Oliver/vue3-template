@@ -1,61 +1,47 @@
-<!-- NavigationDrawer.vue -->
 <template>
   <v-navigation-drawer
     v-model="sidebarStore.showSidebar"
     :permanent="$vuetify.display.mdAndUp"
-    :expand-on-hover="$vuetify.display.mdAndUp"
-    :rail="$vuetify.display.mdAndUp"
-    color="cyan-lighten-5"
+    width="264"
+    color="surface"
+    border
   >
-    <!-- Información del usuario -->
-    <v-list>
+    <div class="pa-4">
       <v-list-item
-        title="Nombre de usuario"
-        subtitle="Rol del usuario"
-        prepend-icon="mdi-star-circle"
+        class="px-2"
+        title="Usuario demo"
+        subtitle="Administrador"
       >
+        <template #prepend>
+          <v-avatar color="primary" size="36"><span class="text-white font-weight-bold">UD</span></v-avatar>
+        </template>
       </v-list-item>
+    </div>
+    <v-divider />
+    <v-list nav density="comfortable" class="pa-3">
+      <v-list-item
+        v-for="item in navigationItems"
+        :key="item.to"
+        :prepend-icon="item.icon"
+        :title="item.title"
+        :to="item.to"
+        color="primary"
+        rounded="lg"
+      />
     </v-list>
-    <v-divider></v-divider>
-
-    <!-- Opciones de navegabilidad -->
-    <v-list density="compact" nav>
-      <v-list-item
-        prepend-icon="mdi-monitor-dashboard"
-        title="Inicio"
-        to="/home"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-account"
-        title="Usuarios"
-        to="/users"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-calendar"
-        title="Agendar citas"
-        to="/appointments"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-doctor"
-        title="Citas pendientes"
-        to="/attended-appointment"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-pill"
-        title="Medicina"
-        to="/medicines"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-emoticon-sick-outline"
-        title="Síntomas"
-        to="/symptoms"
-      ></v-list-item>
-    </v-list>
+    <template #append>
+      <div class="pa-3">
+        <v-btn block variant="tonal" color="primary" prepend-icon="mdi-cog-outline" to="/settings">
+          Ajustes
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script setup>
-import { useSidebarStore } from "@/store/sidebarStore";
+import { navigationItems } from '@/config/app';
+import { useSidebarStore } from '@/store/sidebarStore';
 
 const sidebarStore = useSidebarStore();
 </script>

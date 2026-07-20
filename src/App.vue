@@ -19,4 +19,16 @@ body {
   margin: 0;
   background: rgb(var(--v-theme-background));
 }
+
+.page-content {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+@media (max-width: 600px) {
+  .page-content {
+    padding: 24px 16px;
+  }
+}
 </style>

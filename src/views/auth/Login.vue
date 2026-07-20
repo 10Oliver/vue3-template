@@ -1,11 +1,11 @@
 <template>
   <div
     class="full-size d-flex justify-center align-center"
-    style="background-color: grey"
+    style="background-color: rgb(var(--v-theme-background))"
   >
     <v-card width="400" class="px-5 py-10">
-      <v-card-title primary-title class="text-center">
-        Inicio de sesión
+      <v-card-title primary-title class="text-center font-weight-bold">
+        AdminKit
       </v-card-title>
       <v-container grid-list-xs class="text-center">
         <v-text-field
@@ -26,7 +26,8 @@
           label="Contraseña"
           id="password"
         ></v-text-field>
-        <v-btn class="my-3" color="purple" variant="tonal" block to="/home">Iniciar sesión</v-btn>
+        <p class="text-caption text-medium-emphasis mb-4">Plantilla administrativa</p>
+        <v-btn class="my-3" color="primary" variant="flat" block to="/dashboard">Iniciar sesión</v-btn>
 
         <router-link class="forget-password text-body-2" to="/reset-password">¿Has olvidado la contraseña?</router-link>
       </v-container>
@@ -47,7 +48,7 @@ export default {
 }
 
 .forget-password {
-    color: purple;
+    color: rgb(var(--v-theme-primary));
     text-decoration: none;
 }
 </style>
