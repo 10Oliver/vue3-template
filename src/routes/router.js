@@ -9,6 +9,8 @@ const routes = [
     component: () => import('@/layout/AuthLayout.vue'),
     children: [
       { path: 'login', name: 'login', component: () => import('@/views/auth/Login.vue'), meta: { guestOnly: true } },
+      { path: 'register', name: 'register', component: () => import('@/views/auth/RegisterOrganization.vue'), meta: { guestOnly: true } },
+      { path: 'verify-organization', name: 'verify-organization', component: () => import('@/views/auth/VerifyOrganization.vue'), meta: { guestOnly: true } },
       { path: 'reset-password', name: 'reset-password', component: () => import('@/views/auth/ResetPassword.vue'), meta: { guestOnly: true } },
     ],
   },

@@ -42,6 +42,7 @@
       <div class="text-center mt-5">
         <router-link class="forget-password text-body-2" to="/reset-password">¿Has olvidado la contraseña?</router-link>
       </div>
+      <div class="text-center mt-2"><router-link class="forget-password text-body-2" to="/register">Crear una organización</router-link></div>
       <v-divider class="my-5" />
       <p class="text-caption text-medium-emphasis">Grupo Atlas: admin@adminkit.local · Admin123*</p>
       <p class="text-caption text-medium-emphasis">Operaciones Norte: admin@norte.local · Admin123*</p>

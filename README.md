@@ -88,6 +88,12 @@ La plantilla incluye dos sesiones locales para navegar y probar el aislamiento e
 
 La sesión guarda el usuario y su organización activa únicamente en `localStorage`, sin almacenar la contraseña. Usuarios, registros y actividad se aíslan por `organizationId`: un identificador de otra organización se rechaza incluso si se conoce la URL o el ID. Cada organización demo tiene exactamente un administrador principal. Las rutas administrativas requieren sesión y el cierre de sesión elimina ese contexto local. La recuperación de contraseña es solo una pantalla de demostración: no envía correos ni modifica credenciales.
 
+## 🏢 Alta de organización
+
+La ruta `/register` crea una solicitud pendiente con el nombre de la organización y su administrador principal. En modo `mock`, el siguiente paso abre una pantalla que simula el enlace recibido por correo y vence en una hora. Al verificarlo se crean la organización y su único administrador principal, que ya puede iniciar sesión.
+
+El envío de correo, la limitación por IP y la custodia de credenciales deben ejecutarse en el backend cuando se use `VITE_DATA_SOURCE=api`; el mock solo permite probar el recorrido localmente.
+
 ## 🗂️ Datos demo y API
 
 Usuarios, registros y actividad tienen repositorios con los métodos `list`, `getById`, `create`, `update` y `remove`. El modo predeterminado es `mock`: los datos se guardan en `localStorage` con prefijos `adminkit.*`, sobreviven una recarga y pueden reiniciarse desde las herramientas del navegador. Los datos previos sin organización se migran de forma local a Grupo Atlas.

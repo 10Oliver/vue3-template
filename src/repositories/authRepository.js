@@ -1,18 +1,7 @@
 import { clearSession, readSession, saveSession } from './sessionContext';
 import { mockOrganizationsRepository } from './organizationsRepository';
-
-const demoAccounts = [
-  {
-    credentials: { email: 'admin@adminkit.local', password: 'Admin123*' },
-    user: { id: 'user-atlas-admin', name: 'Ana Martínez', email: 'admin@adminkit.local', role: 'Administradora', isPrimaryAdmin: true },
-    organizationId: 'org-atlas',
-  },
-  {
-    credentials: { email: 'admin@norte.local', password: 'Admin123*' },
-    user: { id: 'user-norte-admin', name: 'Diego Herrera', email: 'admin@norte.local', role: 'Administrador', isPrimaryAdmin: true },
-    organizationId: 'org-norte',
-  },
-];
+import { demoAccounts, demoCredentials } from './demoAccounts';
+import { registrationRepository } from './registrationRepository';
 
 function sanitizeUser(user) {
   return {
@@ -30,7 +19,9 @@ function sanitizeSession(account) {
 
 export const authRepository = {
   async login({ email, password }) {
-    const account = demoAccounts.find((entry) => entry.credentials.email === email.trim().toLowerCase() && entry.credentials.password === password);
+    const normalizedEmail = email.trim().toLowerCase();
+    const demoAccount = demoAccounts.find((entry) => entry.credentials.email === normalizedEmail && entry.credentials.password === password);
+    const account = demoAccount || await registrationRepository.findVerifiedAccount(normalizedEmail, password);
     if (!account) {
       throw new Error('Correo o contraseña incorrectos.');
     }
@@ -52,4 +43,4 @@ export const authRepository = {
   },
 };
 
-export const demoCredentials = demoAccounts.map((account) => account.credentials);
+export { demoCredentials };

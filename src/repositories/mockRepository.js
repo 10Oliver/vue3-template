@@ -61,6 +61,17 @@ export function createMockRepository({
   }
 
   return {
+    async bootstrap(payload) {
+      const items = read();
+      const existing = items.find((item) => item.id === payload.id);
+      if (existing) return clone(existing);
+      const now = new Date().toISOString();
+      const item = { ...clone(payload), id: payload.id || crypto.randomUUID(), createdAt: payload.createdAt || now, updatedAt: payload.updatedAt || now };
+      items.unshift(item);
+      write(items);
+      return clone(item);
+    },
+
     async list({ search = '', page = 1, itemsPerPage = 0 } = {}) {
       const organizationId = activeOrganizationId();
       const normalizedSearch = search.trim().toLowerCase();

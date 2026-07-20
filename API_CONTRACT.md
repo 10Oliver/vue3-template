@@ -37,6 +37,12 @@ La interfaz usa el mismo contrato tanto con mocks como con API. Para activar los
 { "user": { "id": "string", "name": "string", "email": "string", "role": "string", "isPrimaryAdmin": "boolean" }, "organization": { "id": "string", "name": "string" }, "token": "string" }
 ```
 
+`OrganizationRegistration`:
+
+```json
+{ "organizationName": "string", "name": "string", "email": "string", "password": "string" }
+```
+
 ## Endpoints
 
 | Recurso | Operaciones |
@@ -45,6 +51,8 @@ La interfaz usa el mismo contrato tanto con mocks como con API. Para activar los
 | `/records` | `GET /records?search=&page=&itemsPerPage=`, `GET /records/:id`, `POST /records`, `PATCH /records/:id`, `DELETE /records/:id` |
 | `/activity` | Mismo contrato CRUD; la UI actual consume `GET` y crea entradas locales al cambiar usuarios o registros. |
 | `/organizations` | `GET /organizations/:id` solo para el contexto autorizado. La creación y selección de organizaciones se implementarán en una etapa posterior. |
+| `/organization-registrations` | `POST` recibe `OrganizationRegistration`, crea una solicitud pendiente y envía un enlace de verificación al correo. Debe responder con `202` sin exponer el token. |
+| `/organization-registrations/verify` | `POST` con el token de verificación; activa la organización y crea su único administrador principal. Debe rechazar tokens inválidos o vencidos. |
 | `/auth/login`, `/auth/logout` | `POST`; `login` devuelve la organización activa junto al usuario. El adaptador está en `src/repositories/api/authApiRepository.js` para integrar la sesión real en una siguiente iteración. |
 
-Al alternar la fuente, las vistas y stores no cambian: los repositorios resuelven `mock` o `api` con el mismo contrato. El backend debe aplicar el aislamiento por organización y la regla de exactamente un administrador principal de forma transaccional.
+Al alternar la fuente, las vistas y stores no cambian: los repositorios resuelven `mock` o `api` con el mismo contrato. El backend debe aplicar el aislamiento por organización y la regla de exactamente un administrador principal de forma transaccional. Para el registro público debe almacenar contraseñas con un algoritmo de hash resistente, enviar el correo fuera de la respuesta HTTP y limitar solicitudes por IP/correo.
