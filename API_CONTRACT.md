@@ -54,6 +54,7 @@ Los recursos de plantilla `Client`, `Task`, `Document` y `Report` incluyen los c
 | `/activity` | Mismo contrato CRUD; la UI actual consume `GET` y crea entradas locales al cambiar usuarios o registros. |
 | `/clients`, `/tasks`, `/documents`, `/reports` | Mismo contrato CRUD que `/records`. Sus campos de formulario se definen en `src/config/templateModules.js`. |
 | `/organizations` | `GET /organizations/:id` solo para el contexto autorizado. La creación y selección de organizaciones se implementarán en una etapa posterior. |
+| `/organizations/setup-status` | `GET` público, devuelve exactamente `{ "exists": true }` o `{ "exists": false }`. No expone nombres, IDs ni cantidad de organizaciones; el login lo usa para mostrar el registro solo en una instalación vacía. |
 | `/organization-modules` | `GET` y `PATCH` para los módulos de la organización activa; solo su administrador principal puede cambiarlos. |
 | `/users/:id` | `PATCH` acepta `permissions` por módulo. La transferencia del administrador principal debe ser una operación transaccional dedicada. |
 | `/organization-registrations` | `POST` recibe `OrganizationRegistration`, crea una solicitud pendiente y envía un enlace de verificación al correo. Debe responder con `202` sin exponer el token. |

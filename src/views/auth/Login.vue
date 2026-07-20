@@ -42,7 +42,7 @@
       <div class="text-center mt-5">
         <router-link class="forget-password text-body-2" to="/reset-password">¿Has olvidado la contraseña?</router-link>
       </div>
-      <div class="text-center mt-2"><router-link class="forget-password text-body-2" to="/register">Crear una organización</router-link></div>
+      <div v-if="canCreateOrganization" class="text-center mt-2"><router-link class="forget-password text-body-2" to="/register">Crear una organización</router-link></div>
       <v-divider class="my-5" />
       <p class="text-caption text-medium-emphasis">Grupo Atlas: admin@adminkit.local · Admin123*</p>
       <p class="text-caption text-medium-emphasis">Operaciones Norte: admin@norte.local · Admin123*</p>
@@ -51,15 +51,26 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { hasRegisteredOrganization } from '@/repositories/organizationsRepository';
 import { useAuthStore } from '@/store/authStore';
 
 const router = useRouter();
 const route = useRoute();
 const authStore = useAuthStore();
 const showPassword = ref(false);
+const canCreateOrganization = ref(false);
 const credentials = reactive({ email: 'admin@adminkit.local', password: 'Admin123*' });
+
+onMounted(async () => {
+  try {
+    canCreateOrganization.value = !(await hasRegisteredOrganization());
+  } catch {
+    // Si no se puede comprobar el estado de instalación, no se expone el registro público.
+    canCreateOrganization.value = false;
+  }
+});
 
 async function submit() {
   try {
