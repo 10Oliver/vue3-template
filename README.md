@@ -103,8 +103,8 @@ Para preparar una API, copia `.env.example` a `.env.local` y configura `VITE_DAT
 ## ✅ Comprobación manual
 
 1. Intenta abrir `/dashboard` sin sesión: debe redirigir a `/login`.
-2. Inicia sesión con una organización y confirma que el panel, Usuarios, Registros, Actividad y Ajustes muestran únicamente su información.
-3. Crea, edita y elimina un usuario o registro; recarga la página para confirmar la persistencia local.
+2. Inicia sesión con una organización y confirma que el panel, Usuarios, Registros, Actividad, Clientes, Tareas, Documentos, Reportes y Ajustes muestran únicamente su información.
+3. Crea, edita y elimina un usuario, registro o elemento de los módulos de plantilla; recarga la página para confirmar la persistencia local.
 4. Revisa Actividad: cada cambio debe aparecer como un nuevo evento.
 5. Cierra sesión, entra con la otra organización y confirma que no aparecen los datos creados en la primera.
 6. Cierra sesión y confirma que una ruta privada vuelve a redirigir al login.

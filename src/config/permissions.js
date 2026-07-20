@@ -2,6 +2,10 @@ export const permissionModules = [
   { key: 'users', label: 'Usuarios' },
   { key: 'records', label: 'Registros' },
   { key: 'activity', label: 'Actividad' },
+  { key: 'clients', label: 'Clientes' },
+  { key: 'tasks', label: 'Tareas' },
+  { key: 'documents', label: 'Documentos' },
+  { key: 'reports', label: 'Reportes' },
 ];
 
 export const permissionLevels = ['Sin acceso', 'Consulta', 'Edición', 'Administración'];

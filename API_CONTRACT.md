@@ -31,6 +31,8 @@ La interfaz usa el mismo contrato tanto con mocks como con API. Para activar los
 { "id": "string", "organizationId": "string", "title": "string", "description": "string", "icon": "mdi-icon-name", "createdAt": "ISO-8601" }
 ```
 
+Los recursos de plantilla `Client`, `Task`, `Document` y `Report` incluyen los campos configurables que muestra su módulo, además de `id`, `organizationId`, `createdAt` y `updatedAt`. La API debe conservar esos campos y aplicar el mismo aislamiento organizacional.
+
 `Session` (adaptador preparado, aún no activado):
 
 ```json
@@ -50,6 +52,7 @@ La interfaz usa el mismo contrato tanto con mocks como con API. Para activar los
 | `/users` | `GET /users?search=&page=&itemsPerPage=`, `GET /users/:id`, `POST /users`, `PATCH /users/:id`, `DELETE /users/:id` |
 | `/records` | `GET /records?search=&page=&itemsPerPage=`, `GET /records/:id`, `POST /records`, `PATCH /records/:id`, `DELETE /records/:id` |
 | `/activity` | Mismo contrato CRUD; la UI actual consume `GET` y crea entradas locales al cambiar usuarios o registros. |
+| `/clients`, `/tasks`, `/documents`, `/reports` | Mismo contrato CRUD que `/records`. Sus campos de formulario se definen en `src/config/templateModules.js`. |
 | `/organizations` | `GET /organizations/:id` solo para el contexto autorizado. La creación y selección de organizaciones se implementarán en una etapa posterior. |
 | `/organization-modules` | `GET` y `PATCH` para los módulos de la organización activa; solo su administrador principal puede cambiarlos. |
 | `/users/:id` | `PATCH` acepta `permissions` por módulo. La transferencia del administrador principal debe ser una operación transaccional dedicada. |

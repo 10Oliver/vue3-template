@@ -30,7 +30,7 @@
       <v-list>
         <v-list-item v-for="module in moduleCatalog" :key="module.key" :title="module.label" :subtitle="module.description">
           <template #append>
-            <v-switch :model-value="modules[module.key]" color="primary" hide-details :disabled="!isPrimaryAdmin || !isAvailable(module.key)" @update:model-value="toggleModule(module.key, $event)" />
+            <v-switch :model-value="modules[module.key]" color="primary" hide-details :disabled="!isPrimaryAdmin" @update:model-value="toggleModule(module.key, $event)" />
           </template>
         </v-list-item>
       </v-list>
@@ -41,7 +41,7 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
 import PageHeader from '@/components/ui/PageHeader.vue';
-import { activeModuleKeys, moduleCatalog } from '@/config/modules';
+import { moduleCatalog } from '@/config/modules';
 import { moduleRepository } from '@/repositories/moduleRepository';
 import { useAuthStore } from '@/store/authStore';
 
@@ -49,8 +49,6 @@ const authStore = useAuthStore();
 const modules = reactive(Object.fromEntries(moduleCatalog.map((module) => [module.key, false])));
 const error = ref('');
 const isPrimaryAdmin = computed(() => authStore.user?.isPrimaryAdmin);
-const isAvailable = (key) => activeModuleKeys.includes(key);
-
 async function loadModules() {
   if (!authStore.organization) return;
   error.value = '';
@@ -62,7 +60,7 @@ async function loadModules() {
 }
 
 async function toggleModule(key, enabled) {
-  if (!isPrimaryAdmin.value || !isAvailable(key)) return;
+  if (!isPrimaryAdmin.value) return;
   error.value = '';
   try {
     Object.assign(modules, await moduleRepository.update(authStore.organization.id, key, enabled));

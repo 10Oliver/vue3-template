@@ -2,7 +2,7 @@
   <Header />
   <Sidebar />
   <v-main>
-    <router-view />
+    <router-view :key="$route.name" />
   </v-main>
 </template>
 

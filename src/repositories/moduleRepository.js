@@ -15,6 +15,12 @@ function ensureOrganization(organizationId) {
   if (!modules[organizationId]) {
     modules[organizationId] = Object.fromEntries(activeModuleKeys.map((key) => [key, true]));
     write(modules);
+  } else {
+    const missingModules = activeModuleKeys.filter((key) => !(key in modules[organizationId]));
+    if (missingModules.length) {
+      Object.assign(modules[organizationId], Object.fromEntries(missingModules.map((key) => [key, true])));
+      write(modules);
+    }
   }
   return modules;
 }
