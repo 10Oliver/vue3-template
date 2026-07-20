@@ -8,4 +8,7 @@ export const authApiRepository = {
   logout() {
     return httpClient.request('/auth/logout', { method: 'POST' });
   },
+  restoreSession() {
+    return httpClient.request('/auth/session');
+  },
 };

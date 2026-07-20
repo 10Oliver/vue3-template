@@ -2,6 +2,8 @@ import { isDemoEmail } from './demoAccounts';
 import { mockOrganizationsRepository } from './organizationsRepository';
 import { mockUsersRepository } from './usersRepository';
 import { adminPermissions } from '@/config/permissions';
+import { isApiSource } from '@/config/dataSource';
+import { httpClient } from './api/httpClient';
 
 const SIGNUPS_KEY = 'adminkit.organization-signups';
 const ATTEMPTS_KEY = 'adminkit.organization-signup-attempts';
@@ -54,7 +56,7 @@ function buildAccount(signup) {
   };
 }
 
-export const registrationRepository = {
+const mockRegistrationRepository = {
   async register({ organizationName, name, email, password }) {
     const normalizedEmail = email.trim().toLowerCase();
     const signups = readSignups();
@@ -101,3 +103,11 @@ export const registrationRepository = {
     return signup ? buildAccount(signup) : null;
   },
 };
+
+const apiRegistrationRepository = {
+  register(payload) { return httpClient.request('/organization-registrations', { method: 'POST', body: payload }); },
+  verify(token) { return httpClient.request('/organization-registrations/verify', { method: 'POST', body: { token } }); },
+  findVerifiedAccount() { return null; },
+};
+
+export const registrationRepository = isApiSource ? apiRegistrationRepository : mockRegistrationRepository;

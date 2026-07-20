@@ -1,4 +1,5 @@
 import { apiConfig } from '@/config/dataSource';
+import { readSession } from '../sessionContext';
 
 function buildUrl(path, query) {
   const url = new URL(`${apiConfig.baseUrl}${path}`);
@@ -17,7 +18,7 @@ export function createHttpClient({ fetchImplementation = globalThis.fetch } = {}
       headers: {
         Accept: 'application/json',
         ...(body ? { 'Content-Type': 'application/json' } : {}),
-        ...(apiConfig.token ? { Authorization: `Bearer ${apiConfig.token}` } : {}),
+        ...((readSession()?.token || apiConfig.token) ? { Authorization: `Bearer ${readSession()?.token || apiConfig.token}` } : {}),
         ...headers,
       },
       ...(body ? { body: JSON.stringify(body) } : {}),

@@ -3,6 +3,8 @@ import { mockOrganizationsRepository } from './organizationsRepository';
 import { demoAccounts, demoCredentials } from './demoAccounts';
 import { registrationRepository } from './registrationRepository';
 import { adminPermissions } from '@/config/permissions';
+import { isApiSource } from '@/config/dataSource';
+import { authApiRepository } from './api/authApiRepository';
 
 function sanitizeUser(user) {
   return {
@@ -19,7 +21,7 @@ function sanitizeSession(account) {
   return { user: sanitizeUser(account.user), organization: { id: account.organization.id, name: account.organization.name } };
 }
 
-export const authRepository = {
+const mockAuthRepository = {
   async login({ email, password }) {
     const normalizedEmail = email.trim().toLowerCase();
     const demoAccount = demoAccounts.find((entry) => entry.credentials.email === normalizedEmail && entry.credentials.password === password);
@@ -44,5 +46,24 @@ export const authRepository = {
     clearSession();
   },
 };
+
+const apiAuthRepository = {
+  async login(credentials) {
+    const session = await authApiRepository.login(credentials);
+    const sanitized = sanitizeSession(session);
+    saveSession({ ...sanitized, token: session.token });
+    return sanitized;
+  },
+  restoreSession() {
+    const session = readSession();
+    if (!session?.token || !session?.user || !session?.organization?.id) return null;
+    return sanitizeSession(session);
+  },
+  async logout() {
+    try { await authApiRepository.logout(); } finally { clearSession(); }
+  },
+};
+
+export const authRepository = isApiSource ? apiAuthRepository : mockAuthRepository;
 
 export { demoCredentials };

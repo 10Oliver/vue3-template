@@ -38,8 +38,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  function logout() {
-    authRepository.logout();
+  async function logout() {
+    await authRepository.logout();
     user.value = null;
     organization.value = null;
     error.value = '';
