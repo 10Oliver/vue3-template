@@ -80,15 +80,17 @@ La plantilla incluye una sesión local para navegar y probar la interfaz sin bac
 
 La sesión se guarda únicamente en `localStorage`, sin almacenar la contraseña. Las rutas administrativas requieren sesión y el cierre de sesión elimina esos datos locales. En una integración real, sustituye el repositorio mock de `src/repositories/authRepository.js` por el adaptador de tu API.
 
-## 🗂️ Datos demo
+## 🗂️ Datos demo y API
 
-Usuarios, registros y actividad tienen repositorios mock con los métodos `list`, `getById`, `create`, `update` y `remove`. Los datos se guardan en `localStorage` con prefijos `adminkit.*`, por lo que sobreviven una recarga y pueden reiniciarse desde las herramientas del navegador. La interfaz incluye búsqueda, filtros, paginación, creación, edición y eliminación confirmada para usuarios y registros.
+Usuarios, registros y actividad tienen repositorios con los métodos `list`, `getById`, `create`, `update` y `remove`. El modo predeterminado es `mock`: los datos se guardan en `localStorage` con prefijos `adminkit.*`, sobreviven una recarga y pueden reiniciarse desde las herramientas del navegador.
+
+Para preparar una API, copia `.env.example` a `.env.local` y configura `VITE_DATA_SOURCE=api` junto con `VITE_API_BASE_URL`. Las vistas y stores no cambian al alternar de fuente. Consulta [API_CONTRACT.md](API_CONTRACT.md) para endpoints, modelos, paginación, errores y la advertencia de seguridad sobre variables `VITE_*`.
 
 ## 📂 Estructura de Directorios
 
 - `src/components/`: Componentes reutilizables de Vue.
 - `src/views/`: Vistas y pantallas de la aplicación.
-- `src/repositories/`: Adaptadores de datos; actualmente contiene el acceso demo de autenticación.
+- `src/repositories/`: Contratos mock y adaptadores HTTP intercambiables.
 - `src/store/`: Estado global de interfaz y sesión.
 - `src/plugins/`: Configuraciones de plugins como Vuetify, Pinia y Vue Router.
 - `src/assets/`: Recursos estáticos como imágenes o estilos globales.
