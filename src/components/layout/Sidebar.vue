@@ -9,11 +9,11 @@
     <div class="pa-4">
       <v-list-item
         class="px-2"
-        title="Usuario demo"
-        subtitle="Administrador"
+        :title="authStore.user?.name || 'Usuario demo'"
+        :subtitle="authStore.user?.role || 'Administrador'"
       >
         <template #prepend>
-          <v-avatar color="primary" size="36"><span class="text-white font-weight-bold">UD</span></v-avatar>
+          <v-avatar color="primary" size="36"><span class="text-white font-weight-bold">{{ initials }}</span></v-avatar>
         </template>
       </v-list-item>
     </div>
@@ -41,7 +41,16 @@
 
 <script setup>
 import { navigationItems } from '@/config/app';
+import { computed } from 'vue';
+import { useAuthStore } from '@/store/authStore';
 import { useSidebarStore } from '@/store/sidebarStore';
 
+const authStore = useAuthStore();
 const sidebarStore = useSidebarStore();
+const initials = computed(() => authStore.user?.name
+  .split(' ')
+  .map((part) => part[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase() || 'UD');
 </script>

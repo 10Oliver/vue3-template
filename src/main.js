@@ -24,8 +24,8 @@ const app = createApp(App);
 
 registerPlugins(app);
 
-app.use(router);
 app.use(pinia);
+app.use(router);
 app.use(VMask);
 
 app.mount("#app");

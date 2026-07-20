@@ -11,13 +11,22 @@
     <v-toolbar-title class="font-weight-bold">{{ appConfig.name }}</v-toolbar-title>
     <v-spacer />
     <v-btn icon="mdi-cog-outline" aria-label="Ajustes" to="/settings" />
-    <v-btn icon="mdi-logout" aria-label="Cerrar sesión" to="/login" />
+    <v-btn icon="mdi-logout" aria-label="Cerrar sesión" @click="logout" />
   </v-app-bar>
 </template>
 
 <script setup>
 import { appConfig } from '@/config/app';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/store/authStore';
 import { useSidebarStore } from '@/store/sidebarStore';
 
+const router = useRouter();
+const authStore = useAuthStore();
 const sidebarStore = useSidebarStore();
+
+function logout() {
+  authStore.logout();
+  router.push('/login');
+}
 </script>

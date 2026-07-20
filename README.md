@@ -71,10 +71,21 @@ npm run build
 - `test:run` ejecuta las pruebas unitarias una sola vez.
 - `build` genera la compilación de producción.
 
+## 🔐 Sesión demo
+
+La plantilla incluye una sesión local para navegar y probar la interfaz sin backend.
+
+- Correo: `admin@adminkit.local`
+- Contraseña: `Admin123*`
+
+La sesión se guarda únicamente en `localStorage`, sin almacenar la contraseña. Las rutas administrativas requieren sesión y el cierre de sesión elimina esos datos locales. En una integración real, sustituye el repositorio mock de `src/repositories/authRepository.js` por el adaptador de tu API.
+
 ## 📂 Estructura de Directorios
 
 - `src/components/`: Componentes reutilizables de Vue.
-- `src/pages/`: Páginas principales de la aplicación.
+- `src/views/`: Vistas y pantallas de la aplicación.
+- `src/repositories/`: Adaptadores de datos; actualmente contiene el acceso demo de autenticación.
+- `src/store/`: Estado global de interfaz y sesión.
 - `src/plugins/`: Configuraciones de plugins como Vuetify, Pinia y Vue Router.
 - `src/assets/`: Recursos estáticos como imágenes o estilos globales.
 - `public/`: Archivos públicos servidos directamente.
