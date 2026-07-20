@@ -80,6 +80,10 @@ La plantilla incluye una sesión local para navegar y probar la interfaz sin bac
 
 La sesión se guarda únicamente en `localStorage`, sin almacenar la contraseña. Las rutas administrativas requieren sesión y el cierre de sesión elimina esos datos locales. En una integración real, sustituye el repositorio mock de `src/repositories/authRepository.js` por el adaptador de tu API.
 
+## 🗂️ Datos demo
+
+Usuarios, registros y actividad tienen repositorios mock con los métodos `list`, `getById`, `create`, `update` y `remove`. Los datos se guardan en `localStorage` con prefijos `adminkit.*`, por lo que sobreviven una recarga y pueden reiniciarse desde las herramientas del navegador. La interfaz incluye búsqueda, filtros, paginación, creación, edición y eliminación confirmada para usuarios y registros.
+
 ## 📂 Estructura de Directorios
 
 - `src/components/`: Componentes reutilizables de Vue.
