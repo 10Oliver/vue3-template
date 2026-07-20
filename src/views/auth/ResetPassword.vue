@@ -107,7 +107,7 @@
 
             <!-- Botones de acción -->
             <v-btn color="purple" variant="tonal" block class="my-1">Cambiar contraseña</v-btn>
-            <v-btn color="blue" variant="tonal" block class="my-1" href="login">Iniciar sesión</v-btn>
+            <v-btn color="blue" variant="tonal" block class="my-1" to="/login">Iniciar sesión</v-btn>
           </v-container>
         </v-card>
       </template>

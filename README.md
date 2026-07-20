@@ -57,6 +57,20 @@ Sigue estos pasos para instalar y ejecutar el proyecto localmente:
    # o yarn preview / pnpm preview
    ```
 
+## ✅ Calidad
+
+Antes de entregar cambios, ejecuta los controles disponibles:
+
+```bash
+npm run lint
+npm run test:run
+npm run build
+```
+
+- `lint` valida JavaScript y la estructura base de componentes Vue.
+- `test:run` ejecuta las pruebas unitarias una sola vez.
+- `build` genera la compilación de producción.
+
 ## 📂 Estructura de Directorios
 
 - `src/components/`: Componentes reutilizables de Vue.

@@ -1,12 +1,22 @@
 <template>
   <v-app>
-    <router-view class="pa-0 ma-0"/>
+    <router-view />
   </v-app>
 </template>
 
 <style>
-html {
-  overflow-y: auto !important;
+:root {
+  font-family: Roboto, Arial, sans-serif;
 }
 
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--v-theme-background));
+}
 </style>

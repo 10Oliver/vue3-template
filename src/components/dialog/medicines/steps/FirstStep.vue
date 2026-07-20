@@ -190,7 +190,7 @@ async function completeFirstStep() {
   const isCorrect = await v$.value.$validate();
   if (isCorrect) {
     // Emits father's method
-    emit("complete-first-step", usersForm, mode);
+    emit("complete-first-step", usersForm, mode.value);
     return;
   }
 }

@@ -26,7 +26,7 @@
           label="Contraseña"
           id="password"
         ></v-text-field>
-        <v-btn class="my-3" color="purple" variant="tonal" block href="/home">Iniciar sesión</v-btn>
+        <v-btn class="my-3" color="purple" variant="tonal" block to="/home">Iniciar sesión</v-btn>
 
         <router-link class="forget-password text-body-2" to="/reset-password">¿Has olvidado la contraseña?</router-link>
       </v-container>

@@ -1,13 +1,13 @@
 <!-- Toolbar.vue -->
 <template>
-  <v-app-bar app color="primary">
+  <v-app-bar color="primary">
 
     <v-app-bar-nav-icon @click="store.showSidebar = !store.showSidebar" v-if="$vuetify.display.smAndDown"></v-app-bar-nav-icon>
     <!-- Contenido del AppBar -->
     <v-toolbar-title>Sistema clinico</v-toolbar-title>
     <!-- Botones u otros elementos aquí -->
-    <v-btn color="white" icon="mdi-cog" rounded="xl" class="mx-1 setting" href="settings"/>
-    <v-btn color="white" icon="mdi-power" rounded="xl" class="mx-1 logout" href="login"/>
+    <v-btn color="white" icon="mdi-cog" rounded="xl" class="mx-1 setting" to="/settings" />
+    <v-btn color="white" icon="mdi-power" rounded="xl" class="mx-1 logout" to="/login" />
   </v-app-bar>
 </template>
 

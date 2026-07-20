@@ -132,7 +132,7 @@
                 <v-col cols="12" md="6" class="mt-1 mt-md-0">
                   <h6 class="text-subtitle-1 font-weight-medium">Síntomas:</h6>
                   <v-list class="pt-0" v-if="item.details.symptom.length !== 0">
-                    <v-list-item v-for="symptom in item.details.symptom">
+                    <v-list-item v-for="symptom in item.details.symptom" :key="symptom.name">
                       <v-row>
                         <v-col cols="1">
                           <v-icon>mdi-circle-medium</v-icon>
@@ -153,7 +153,7 @@
                     class="pt-0"
                     v-if="item.details.medicine.length !== 0"
                   >
-                    <v-list-item v-for="medicine in item.details.medicine">
+                    <v-list-item v-for="medicine in item.details.medicine" :key="medicine.name">
                       <v-row>
                         <v-col cols="1" class="d-flex align-center">
                           <v-icon>mdi-circle-medium</v-icon>
@@ -169,7 +169,7 @@
                   </v-list>
                   <p v-else>No se ha suministrado medicina</p>
                 </v-col>
-                <v-divider class="mb-3"</v-divider>
+                <v-divider class="mb-3" />
                 <!-- Información adicional del paciente -->
                 <v-col cols="12" class="py-0">
                   <h6 class="text-subtitle-1 font-weight-medium">Información adicional del paciente</h6>

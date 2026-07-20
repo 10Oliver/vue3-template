@@ -7,7 +7,7 @@ export const useSidebarStore = defineStore('sidebar', () => {
     const currentView = ref("home");
 
     function openSidebar() {
-        showSidebar.value = !showSidebar;
+        showSidebar.value = !showSidebar.value;
     }
 
     return { showSidebar, openSidebar, currentView };
